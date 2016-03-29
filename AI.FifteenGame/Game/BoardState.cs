@@ -76,7 +76,9 @@ namespace AI.FifteenGame
         private int? _totalDistance = null;
 
         /// <summary>
-        /// The total Manhattan Distance between all the misplaced pieces in the <see cref="MisplacedSquares"/> collection.
+        /// The total Manhattan Distance between all the misplaced pieces in the <see cref="MisplacedSquares"/> to their 
+        /// solution position.
+        /// <seealso cref="BoardSquare.SolutionPiece"/>
         /// </summary>
         public int TotalDistanceRemaining
         {
@@ -157,7 +159,7 @@ namespace AI.FifteenGame
             return string.Format("Empty {0} Distance {1} Misplaced {2}", EmptySquare, TotalDistanceRemaining, MisplacedPieces);
         }
         /// <summary>
-        /// Checks for equality with another board state based on whether their position maps contain the same elements in the same order.  
+        /// Checks for equality between this instance and another BoardState based on the position of the boards.  
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>

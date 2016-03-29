@@ -21,26 +21,50 @@ using System.Linq;
 
 namespace AI.FifteenGame
 {
+    /// <summary>
+    /// Provides behavior that associates an object with an integer based index.  
+    /// </summary>
     public interface IIndexedObject
     {
+        /// <summary>
+        /// The Index of this instance.  
+        /// </summary>
         int Index { get; set; }
     }
 
+    /// <summary>
+    /// A collection that maintains its contentens in the sort order supplied by an <see cref="IComparer{T}"/> instance.
+    /// Copyright (C) 2006 Franco, Gustavo 
+    /// </summary>
+    /// <typeparam name="T">A generic parameter that defines the type stored by this collection.</typeparam>
     public class PriorityQueue<T> where T : IIndexedObject
     {
         protected List<T> InnerList = new List<T>();
         protected IComparer<T> mComparer;
 
+        /// <summary>
+        /// Creates a new empty PriorityQueue using the <see cref="Comparer{T}.Default"/> property of this 
+        /// collection's item type.
+        /// </summary>
         public PriorityQueue()
         {
             mComparer = Comparer<T>.Default;
         }
 
+        /// <summary>
+        /// Creates a new PriorityQueue with the supplied <see cref="IComparer{T}"/>.
+        /// </summary>
+        /// <param name="comparer"></param>
         public PriorityQueue(IComparer<T> comparer)
         {
             mComparer = comparer;
         }
 
+        /// <summary>
+        /// Creates a new PriorityQueue with the supplied <see cref="IComparer{T}"/> and capacity.
+        /// </summary>
+        /// <param name="comparer"></param>
+        /// <param name="capacity"></param>
         public PriorityQueue(IComparer<T> comparer, int capacity)
         {
             mComparer = comparer;
@@ -143,6 +167,12 @@ namespace AI.FifteenGame
             }
         }
 
+        /// <summary>
+        /// Gets an item from the list if it exists.  Whether the item exists in the list is determined by 
+        /// the item's implementation of <see cref="object.Equals(object)"/>.
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns>The instance from the </returns>
         public T GetItem(T item)
         {
             return InnerList.FirstOrDefault(x => x.Equals(item));
@@ -159,11 +189,17 @@ namespace AI.FifteenGame
             return default(T);
         }
 
+        /// <summary>
+        /// Removes all items from this collection.  
+        /// </summary>
         public void Clear()
         {
             InnerList.Clear();
         }
 
+        /// <summary>
+        /// Returns the number of elements currently in tis collection.  
+        /// </summary>
         public int Count
         {
             get { return InnerList.Count; }
