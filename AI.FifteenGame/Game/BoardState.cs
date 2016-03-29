@@ -122,8 +122,7 @@ namespace AI.FifteenGame
         /// <summary>
         /// Returns a new BoardState object which represents the supplied move applied to the current position.  
         /// </summary>
-        /// <param name="square"></param>
-        /// <param name="direction"></param>
+        /// <param name="move"></param>
         /// <returns></returns>
         public BoardState Move(GameMove move)
         {
