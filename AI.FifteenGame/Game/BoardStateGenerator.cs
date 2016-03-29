@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AI.FifteenGame.Extensions;
+
 namespace AI.FifteenGame
 {
     /// <summary>

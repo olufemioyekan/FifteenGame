@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace AI.FifteenGame
 {
     /// <summary>
-    /// The BoardSquare class represents a sqauare on the fifteen game board.  
+    /// The BoardSquare structure represents a sqauare on the fifteen game board.  
     /// </summary>
     public struct BoardSquare
     {

@@ -40,7 +40,9 @@ namespace AI.FifteenGame.Console
             var agent = new GameAgent();
             sb.AppendLine("Initial Position:");
             sb.AppendLine("********************");
-            sb.AppendLine(RenderBoard(agent.InitialPosition));
+            var initialDiagram = (RenderBoard(agent.InitialPosition));
+            sb.Append(initialDiagram);
+            System.Console.WriteLine(initialDiagram);
             agent.BestCostFound += HandleBestCostFound;
             var solutionNodes = agent.SolveGame();
             var moves = solutionNodes.Select(x => x.Move);
