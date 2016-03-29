@@ -33,7 +33,7 @@ namespace AI.FifteenGame
     }
 
     /// <summary>
-    /// A collection that maintains its contentens in the sort order supplied by an <see cref="IComparer{T}"/> instance.
+    /// A collection that maintains its contentens in the sort order determined by an <see cref="IComparer{T}"/> instance.
     /// Copyright (C) 2006 Franco, Gustavo 
     /// </summary>
     /// <typeparam name="T">A generic parameter that defines the type stored by this collection.</typeparam>
@@ -172,7 +172,7 @@ namespace AI.FifteenGame
         /// the item's implementation of <see cref="object.Equals(object)"/>.
         /// </summary>
         /// <param name="item"></param>
-        /// <returns>The instance from the </returns>
+        /// <returns></returns>
         public T GetItem(T item)
         {
             return InnerList.FirstOrDefault(x => x.Equals(item));

@@ -76,9 +76,8 @@ namespace AI.FifteenGame
         private int? _totalDistance = null;
 
         /// <summary>
-        /// The total Manhattan Distance between all the misplaced pieces in the <see cref="MisplacedSquares"/> to their 
-        /// solution position.
-        /// <seealso cref="BoardSquare.SolutionPiece"/>
+        /// The total Manhattan Distance between all the misplaced pieces in the <see cref="MisplacedSquares"/> collecions to their 
+        /// solution positions.
         /// </summary>
         public int TotalDistanceRemaining
         {
@@ -101,7 +100,7 @@ namespace AI.FifteenGame
         }
 
         /// <summary>
-        /// Returns true if every square in this position is occupied by its solution square.  Otherwise, false.
+        /// Returns a boolean value indicating if this state is the same as the solution state for the game.  
         /// </summary>
         public bool IsSolutionState
         {
