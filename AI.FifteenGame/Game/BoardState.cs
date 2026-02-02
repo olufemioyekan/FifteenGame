@@ -1,7 +1,9 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
+﻿using AI.FifteenGame.Agent;
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Policy;
 
 namespace AI.FifteenGame
 {
@@ -186,7 +188,32 @@ namespace AI.FifteenGame
             return true;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public override bool Equals(object obj) => obj is BoardState bs && Equals(bs);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 17;
+                // Ensure order-independent hashing by sorting squares by coordinates
+                foreach (var kvp in SquareMap.OrderBy(p => p.Key.X).ThenBy(p => p.Key.Y))
+                {
+                    hash = hash * 23 + kvp.Key.GetHashCode();
+                    hash = hash * 23 + (kvp.Value?.GetHashCode() ?? 0);
+                }
+                return hash;
+            }
+        }
+
 
 
         private MoveDirection GetMoveDirection(BoardSquare square)
