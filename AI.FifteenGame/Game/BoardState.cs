@@ -18,14 +18,13 @@ namespace AI.FifteenGame
         /// </summary>
         public IDictionary<BoardSquare, int?> SquareMap { get; private set; }
 
+
+       
         /// <summary>
         /// A <see cref="BoardSquare"/> representing the empty square of this instance.
         /// </summary>
-        public BoardSquare EmptySquare
-        {
-            get { return SquareMap.Single(kvp => kvp.Value == null).Key; }
-        }
-
+        public BoardSquare EmptySquare { get; private set; }
+        
         /// <summary>
         /// A collection of <see cref="GameMove"/> objects representing all of the legal moves for this instance.
         /// </summary>
@@ -59,7 +58,7 @@ namespace AI.FifteenGame
         private int? _misplacedPieces = null;
 
         /// <summary>
-        /// The number of squares not do not have their solution piece in the position represented by this instance.
+        /// The number of squares that do not have their solution piece in the position represented by this instance.
         /// </summary>
         public int MisplacedPieces
         {
@@ -85,13 +84,22 @@ namespace AI.FifteenGame
             {
                 if (_totalDistance == null)
                 {
-                    
-                    var total = 0;
-                    foreach (var square in MisplacedSquares)
+                    int total = 0;
+
+                    foreach (var kvp in SquareMap)
                     {
-                        var pieceSquare = SquareMap.First(x => x.Value == square.SolutionPiece).Key;
-                        total += Math.Abs(square.X - pieceSquare.X) + Math.Abs(square.Y - pieceSquare.Y);
+                        var currentSquare = kvp.Key;
+                        var piece = kvp.Value;
+
+                        if (piece == null) continue; // ignore blank
+
+                        // compute goal square for this piece
+                        int goalX = ((piece.Value - 1) % 4) + 1;
+                        int goalY = ((piece.Value - 1) / 4) + 1;
+
+                        total += Math.Abs(currentSquare.X - goalX) + Math.Abs(currentSquare.Y - goalY);
                     }
+
                     _totalDistance = total;
                 }
 
@@ -118,6 +126,7 @@ namespace AI.FifteenGame
         public BoardState(IDictionary<BoardSquare, int?> boardState)
         {
             SquareMap = new Dictionary<BoardSquare, int?>(boardState);
+            EmptySquare = SquareMap.Single(kvp => kvp.Value == null).Key;
         }
 
         /// <summary>
@@ -146,7 +155,7 @@ namespace AI.FifteenGame
             var newState = new BoardState(SquareMap);
             newState.SquareMap[candidateSquare] = piece;
             newState.SquareMap[square] = null;
-
+            newState.EmptySquare = square;
             return newState;
         }
         /// <summary>
@@ -164,8 +173,20 @@ namespace AI.FifteenGame
         /// <returns></returns>
         public bool Equals(BoardState other)
         {
-            return SquareMap.SequenceEqual(other.SquareMap);
+            if (other is null) return false;
+            if (ReferenceEquals(this, other)) return true;
+            if (SquareMap.Count != other.SquareMap.Count) return false;
+
+            // order-independent
+            foreach (var kvp in SquareMap)
+            {
+                if (!other.SquareMap.TryGetValue(kvp.Key, out var v)) return false;
+                if (kvp.Value != v) return false;
+            }
+            return true;
         }
+
+        public override bool Equals(object obj) => obj is BoardState bs && Equals(bs);
 
 
         private MoveDirection GetMoveDirection(BoardSquare square)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AI.FifteenGame.Agent;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -30,6 +31,7 @@ namespace AI.FifteenGame.Console
 
             System.Console.ReadKey();
             System.IO.File.WriteAllText("GameSoution.txt", sb.ToString());
+            System.Console.WriteLine(sb.ToString());
 
 
         }

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AI.FifteenGame.Extensions;
 
-namespace AI.FifteenGame
+namespace AI.FifteenGame.Agent
 {
     /// <summary>
     /// The GameAgent class represents the AI for this implementation of the Fifteen Game.  The 
@@ -30,15 +30,8 @@ namespace AI.FifteenGame
         /// <summary>
         /// A list of nodes ready to be explored.
         /// </summary>
-        public PriorityQueue<Node> Frontier { get; private set; }
-        /// <summary>
-        /// A list of the nodes that have already been explored by this instance.  
-        /// </summary>
-        public IList<Node> Explored { get; private set; }
-        /// <summary>
-        /// A list of nodes that might belong to the solution path.
-        /// </summary>
-        public IList<Node> Path { get; private set; }
+        private readonly PriorityQueue<Node> frontier = new PriorityQueue<Node>();
+
         /// <summary>
         /// The staring position to be solved by this instance.  
         /// </summary>
@@ -59,9 +52,6 @@ namespace AI.FifteenGame
         /// </summary>
         public GameAgent()
         {
-            Frontier = new PriorityQueue<Node>(Node.Default);
-            Explored = new List<Node>();
-            Path = new List<Node>();
             InitialPosition = BoardStateGenerator.CreateRandomBoard();
         }
         #region Game Solution
@@ -73,67 +63,63 @@ namespace AI.FifteenGame
         public IEnumerable<Node> SolveGame()
         {
             var initialNode = new Node(InitialPosition, null, 0);
-            Path.Add(initialNode);
-            Frontier.Push(initialNode);
+            frontier.Push(initialNode);
             bestCost = initialNode.PathCost;
             var finalNode = FindSolutionNode(initialNode);
+
             return SolvedMoveList(finalNode).Reverse();
         }
 
-    
-
         private Node FindSolutionNode(Node initialNode)
         {
-            Node finalNode = initialNode;
-            while (Frontier.Count > 0)
+            var openBest = new Dictionary<BoardState, Node>();
+            var closedBestG = new Dictionary<BoardState, int>();
+
+            openBest[initialNode.BoardState] = initialNode;
+
+            while (frontier.Count > 0)
             {
-                var exploredNode = Frontier.Pop();
-                Explored.Add(exploredNode);
-                Iterations++;
+                var current = frontier.Pop();
+                openBest.Remove(current.BoardState);
 
-                var board = exploredNode.BoardState;
-                var candidates = board.LegalMoves;
-                if (exploredNode.HeuristicCost < bestCost)
+                if (current.BoardState.IsSolutionState)
+                    return current;
+
+                // mark closed with best g
+                closedBestG[current.BoardState] = current.MoveCount;
+
+                foreach (var move in current.BoardState.LegalMoves)
                 {
-                    bestCost = exploredNode.HeuristicCost;
-                    OnClosestSolutionFoundEventRaised(exploredNode);
-                }
-
-                foreach (var candidate in candidates)
-                {
-                    var moveCount = exploredNode.MoveCount + 1;
-                    var candidateBoard = board.Move(candidate);
-                    var candidateNode = new Node(candidateBoard, candidate, moveCount);
-                    candidateNode.Parent = exploredNode;
-
-                    if (candidateBoard.IsSolutionState)
-                        return candidateNode;
-                    if (exploredNode.Move != null && candidate.Direction.IsOpposite(exploredNode.Move.Direction))
+                    if (current.Move != null && move.Direction.IsOpposite(current.Move.Direction))
                         continue;
 
-                    var closedMatch = Explored.FirstOrDefault(x => x.Equals(candidateNode));
-                    if (closedMatch != null && closedMatch.PathCost <= candidateNode.PathCost)
+                    var nextBoard = current.BoardState.Move(move);
+                    var nextG = current.MoveCount + 1;
+
+                    // closed check
+                    if (closedBestG.TryGetValue(nextBoard, out var bestClosedG) && nextG >= bestClosedG)
+                        continue;
+
+                    // open check
+                    if (openBest.TryGetValue(nextBoard, out var openNode))
                     {
-                        closedMatch.SwapPathProperties(candidateNode.Parent, moveCount);
+                        if (nextG >= openNode.MoveCount)
+                            continue;
+
+                        openNode.SetPathProperties(current, nextG);
+                        frontier.Update(openNode);
                         continue;
                     }
 
-                    var frontierMatch = Frontier.GetItem(candidateNode);
-                    if (frontierMatch != null)
-                    {
-                        frontierMatch.SwapPathProperties(candidateNode.Parent, moveCount);
-                        Frontier.Update(frontierMatch);
-                        continue;
-                    }
-
-                    Frontier.Push(candidateNode);
-
-                    Path.Add(candidateNode);
+                    var nextNode = new Node(nextBoard, move, nextG) { Parent = current };
+                    frontier.Push(nextNode);
+                    openBest[nextBoard] = nextNode;
                 }
             }
 
-            return finalNode;
+            return null;
         }
+
         #endregion
         private IEnumerable<Node> SolvedMoveList(Node finalNode)
         {

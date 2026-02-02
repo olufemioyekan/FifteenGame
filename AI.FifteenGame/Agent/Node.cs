@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AI.FifteenGame
+namespace AI.FifteenGame.Agent
 {
     /// <summary>
     /// The Node class stores information related to a particular <see cref="BoardState"/> object to be used
@@ -16,7 +16,7 @@ namespace AI.FifteenGame
     /// For this problem space, <see cref="MoveCount"/> is g and <see cref="HeuristicCost"/> is h.  
     /// See <see cref="GameAgent"/> for more information.  
     /// </remarks>
-    public class Node : IEquatable<Node>, IComparer<Node>, IIndexedObject
+    public class Node : IEquatable<Node>, IComparer<Node>, IIndexedObject, IComparable<Node>
     { 
 
         public static Node Default
@@ -102,7 +102,7 @@ namespace AI.FifteenGame
         /// </summary>
         /// <param name="parent"></param>
         /// <param name="moveCount"></param>
-        public void SwapPathProperties(Node parent, int moveCount)
+        public void SetPathProperties(Node parent, int moveCount)
         {
             Parent = parent;
             MoveCount = moveCount;
@@ -129,6 +129,11 @@ namespace AI.FifteenGame
             else if (x.PathCost > y.PathCost)
                 return 1;
             return 0;
+        }
+
+        public int CompareTo(Node other)
+        {
+            return Compare(this, other);
         }
     }
 }

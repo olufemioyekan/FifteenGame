@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AI.FifteenGame</RootNamespace>
     <AssemblyName>AI.FifteenGame</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -45,12 +46,12 @@
     <Compile Include="Game\BoardStateGenerator.cs" />
     <Compile Include="Game\BoardStateTextRenderer.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="AI\GameAgent.cs" />
+    <Compile Include="Agent\GameAgent.cs" />
     <Compile Include="Game\GameMove.cs" />
     <Compile Include="Game\BoardSquare.cs" />
     <Compile Include="Game\MoveDirection.cs" />
-    <Compile Include="AI\Node.cs" />
-    <Compile Include="AI\PriorityQueue.cs" />
+    <Compile Include="Agent\Node.cs" />
+    <Compile Include="PriorityQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
