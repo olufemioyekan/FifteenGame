@@ -20,42 +20,60 @@ app.MapGet("/new", () =>
 
 app.MapPost("/solve", (SolveRequest request) =>
 {
-    // Convert the request DTO to BoardState
-    var squareMap = new Dictionary<BoardSquare, int?>();
-    foreach (var kvp in request.Board)
+    try
     {
-        try
+        // Convert the request DTO to BoardState
+        var squareMap = new Dictionary<BoardSquare, int?>();
+        foreach (var kvp in request.Board)
         {
-            var square = BoardSquareFactory.Parse(kvp.Key);
-            squareMap[square] = kvp.Value;
+            try
+            {
+                var square = BoardSquareFactory.Parse(kvp.Key);
+                squareMap[square] = kvp.Value;
+            }
+            catch (ArgumentException)
+            {
+                return Results.BadRequest(new { error = $"Invalid board format. Keys should be in format 'X:Y' (e.g., '1:1'). Invalid key: '{kvp.Key}'" });
+            }
         }
-        catch (ArgumentException ex)
+        
+        // Validate the board has exactly 16 squares
+        if (squareMap.Count != 16)
         {
-            return Results.BadRequest(ex.Message);
+            return Results.BadRequest(new { error = $"Invalid board. Expected 16 squares, but got {squareMap.Count}" });
         }
+        
+        var boardState = new BoardState(squareMap);
+        var agent = new GameAgent(boardState);
+        var solution = agent.SolveGame();
+        
+        if (solution == null)
+        {
+            return Results.Problem("No solution could be found for the given board state");
+        }
+        
+        // Convert the solution to response DTO
+        var moves = solution
+            .Where(node => node.Move != null)
+            .Select(node => new MoveDto
+            {
+                Piece = node.Move.Piece,
+                Direction = node.Move.Direction.ToString()
+            })
+            .ToList();
+        
+        var response = new SolveResponse
+        {
+            Moves = moves,
+            TotalMoves = moves.Count
+        };
+        
+        return Results.Ok(response);
     }
-    
-    var boardState = new BoardState(squareMap);
-    var agent = new GameAgent(boardState);
-    var solution = agent.SolveGame();
-    
-    // Convert the solution to response DTO
-    var moves = solution
-        .Where(node => node.Move != null)
-        .Select(node => new MoveDto
-        {
-            Piece = node.Move.Piece,
-            Direction = node.Move.Direction.ToString()
-        })
-        .ToList();
-    
-    var response = new SolveResponse
+    catch (Exception ex)
     {
-        Moves = moves,
-        TotalMoves = moves.Count
-    };
-    
-    return Results.Ok(response);
+        return Results.Problem(detail: ex.Message, title: "An error occurred while solving the puzzle");
+    }
 
 });
 
