@@ -49,7 +49,7 @@ app.MapPost("/solve", (SolveRequest request) =>
         
         if (solution == null)
         {
-            return Results.Problem("The solver was unable to find a solution for the given board state. The board may be unsolvable.");
+            return Results.Problem("No solution found. The board may be unsolvable, or the solver may have reached its search limit.");
         }
         
         // Convert the solution to response DTO
@@ -78,7 +78,7 @@ app.MapPost("/solve", (SolveRequest request) =>
     catch (Exception)
     {
         // Log the exception here if logging is configured
-        return Results.Problem(title: "An error occurred while solving the puzzle", detail: "Please check that the board state is valid and try again.");
+        return Results.Problem(title: "An unexpected error occurred during solving", detail: "The board format was valid but processing failed. Please try again.");
     }
 
 });
