@@ -6,7 +6,7 @@ namespace AI.FifteenGame.WebApi.Models;
 public class SolveRequest
 {
     /// <summary>
-    /// A dictionary representing the board state where keys are square positions (e.g., "1,1", "1,2") 
+    /// A dictionary representing the board state where keys are square positions (e.g., "1:1", "1:2") 
     /// and values are the piece numbers (null for the empty square).
     /// </summary>
     public Dictionary<string, int?> Board { get; set; } = new Dictionary<string, int?>();

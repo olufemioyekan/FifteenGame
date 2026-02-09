@@ -11,14 +11,14 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-app.MapGet("/new",  () =>
+app.MapGet("/new", () =>
 {
     var board = BoardStateGenerator.CreateRandomBoard();
     return Results.Ok(board);
 
 });
 
-app.MapPost("/solve",  (SolveRequest request) =>
+app.MapPost("/solve", (SolveRequest request) =>
 {
     // Convert the request DTO to BoardState
     var squareMap = new Dictionary<BoardSquare, int?>();
