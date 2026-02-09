@@ -31,7 +31,7 @@ namespace AI.FifteenGame.Console
 
             System.Console.ReadKey();
             System.IO.File.WriteAllText("GameSoution.txt", sb.ToString());
-            System.Console.WriteLine(sb.ToString());
+            System.Console.WriteLine(sb);
 
 
         }

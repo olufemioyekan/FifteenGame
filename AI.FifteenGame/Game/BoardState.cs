@@ -223,7 +223,22 @@ namespace AI.FifteenGame
         }
 
 
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 17;
 
+                // Ensure order-independent hashing by sorting squares by coordinates
+                foreach (var kvp in SquareMap.OrderBy(p => p.Key.X).ThenBy(p => p.Key.Y))
+                {
+                    hash = hash * 23 + kvp.Key.GetHashCode();
+                    hash = hash * 23 + (kvp.Value?.GetHashCode() ?? 0);
+                }
+
+                return hash;
+            }
+        }
         private MoveDirection GetMoveDirection(BoardSquare square)
         {
             if (square.X == EmptySquare.X)
