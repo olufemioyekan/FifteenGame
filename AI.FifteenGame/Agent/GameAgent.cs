@@ -43,7 +43,7 @@ namespace AI.FifteenGame.Agent
         /// <summary>
         /// Event that fires when a new BestCost node has been discoved.  
         /// </summary>
-        public event EventHandler<ClosestSolutionFoundEventArgs> BestCostFound;
+        public event EventHandler<SolutionProgressEventArgs> BestCostFound;
 
         private int bestCost;
 
@@ -53,6 +53,11 @@ namespace AI.FifteenGame.Agent
         public GameAgent()
         {
             InitialPosition = BoardStateGenerator.CreateRandomBoard();
+        }
+
+        public GameAgent(BoardState initialPosition)
+        {
+            InitialPosition = initialPosition;
         }
         #region Game Solution
         /// <summary>
@@ -141,29 +146,9 @@ namespace AI.FifteenGame.Agent
         {
             if (this.BestCostFound != null)
             {
-                BestCostFound(this, new ClosestSolutionFoundEventArgs(currentNode));
+                BestCostFound(this, new SolutionProgressEventArgs(currentNode));
             }
         }
-    }
-
-  
-    /// <summary>
-    /// EventArgs for the BestCostFound Event.  
-    /// </summary>
-    public class ClosestSolutionFoundEventArgs : EventArgs
-    {
-        public readonly Node Node;
-      
-        /// <summary>
-        /// Creates a new instance of BestCostFountEventArgs.
-        /// </summary>
-        /// <param name="cost"></param>
-        /// <param name="node"></param>
-        public ClosestSolutionFoundEventArgs(Node node)
-        {
-            Node = node;
-        }
-
     }
 }
 

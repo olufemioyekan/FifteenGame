@@ -60,7 +60,7 @@ namespace AI.FifteenGame.Console
             return sb.ToString();
         }
 
-        private static void HandleBestCostFound(object sender, ClosestSolutionFoundEventArgs args)
+        private static void HandleBestCostFound(object sender, SolutionProgressEventArgs args)
         {
             var sb = new StringBuilder();
             var agent = (GameAgent)sender;

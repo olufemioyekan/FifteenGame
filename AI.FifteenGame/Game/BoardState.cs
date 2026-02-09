@@ -3,7 +3,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Security.Policy;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AI.FifteenGame
 {
@@ -18,7 +21,10 @@ namespace AI.FifteenGame
         /// A Dictionary representing a map of the squares and their piece values for his instance.  The keys are represented
         /// by <see cref="BoardSquare"/> objects, and the values represent the piece number (null is used for the empty square).
         /// </summary>
+        [JsonIgnore]
         public IDictionary<BoardSquare, int?> SquareMap { get; private set; }
+
+        public IDictionary<string, int?> Board => SquareMap.ToDictionary(kvp => kvp.Key.ToString(), kvp => kvp.Value);
 
 
        
@@ -26,10 +32,11 @@ namespace AI.FifteenGame
         /// A <see cref="BoardSquare"/> representing the empty square of this instance.
         /// </summary>
         public BoardSquare EmptySquare { get; private set; }
-        
+
         /// <summary>
         /// A collection of <see cref="GameMove"/> objects representing all of the legal moves for this instance.
         /// </summary>
+        [JsonIgnore]
         public IEnumerable<GameMove> LegalMoves
         {
             get
@@ -45,10 +52,11 @@ namespace AI.FifteenGame
                 }
             }
         }
-        
+
         /// <summary>
         /// A collection containing all of the squares in this position that are not occupied by their solution piece.
         /// </summary>
+        [JsonIgnore]
         public IEnumerable<BoardSquare> MisplacedSquares
         {
             get
