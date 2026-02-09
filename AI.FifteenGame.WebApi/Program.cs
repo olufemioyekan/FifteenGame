@@ -31,9 +31,9 @@ app.MapPost("/solve", (SolveRequest request) =>
                 var square = BoardSquareFactory.Parse(kvp.Key);
                 squareMap[square] = kvp.Value;
             }
-            catch (ArgumentException)
+            catch (ArgumentException ex)
             {
-                return Results.BadRequest(new { error = $"Invalid board format. Keys should be in format 'X:Y' (e.g., '1:1'). Invalid key: '{kvp.Key}'" });
+                return Results.BadRequest(new { error = $"Invalid board format: {ex.Message}" });
             }
         }
         
@@ -57,8 +57,8 @@ app.MapPost("/solve", (SolveRequest request) =>
             .Where(node => node.Move != null)
             .Select(node => new MoveDto
             {
-                Piece = node.Move.Piece,
-                Direction = node.Move.Direction.ToString()
+                Piece = node.Move!.Piece,
+                Direction = node.Move!.Direction.ToString()
             })
             .ToList();
         
