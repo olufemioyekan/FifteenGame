@@ -1,0 +1,109 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<main>
+
+
+    <div class="board" id="board" style="background-color: rgb(185, 174, 161);">
+        <div id="tiles">
+            <div class="tile"><span>1</span></div>
+            <div class="tile"><span>2</span></div>
+            <div class="tile"><span>3</span></div>
+            <div class="tile"><span>4</span></div>
+            <div class="tile"><span>5</span></div>
+            <div class="tile"><span>6</span></div>
+            <div class="tile"><span>7</span></div>
+            <div class="tile"><span>8</span></div>
+            <div class="tile"><span>9</span></div>
+            <div class="tile"><span>10</span></div>
+            <div class="tile"><span>11</span></div>
+            <div class="tile"><span>12</span></div>
+            <div class="tile"><span>13</span></div>
+            <div class="tile"><span>14</span></div>
+            <div class="tile"><span>15</span></div>
+            <div class="tile empty"></div>
+        </div>
+
+        <!-- Game Over Overlay -->
+        <div id="gameOverOverlay" class="overlay" style="display: none;">
+            <div class="overlay-content">
+                <h2>You Won!</h2>
+                <div class="stats">
+                    <div>
+                        <div id="scoreValue">284</div>
+                        <div>Score</div>
+                    </div>
+                    <div>
+                        <div id="movesValue">158</div>
+                        <div>Moves</div>
+                    </div>
+                    <div>
+                        <div id="timeValue">126s</div>
+                        <div>Time</div>
+                    </div>
+                </div>
+                <button class="overlayButton">Share Game</button>
+            </div>
+        </div>
+
+        <!-- Shortcut Help Overlay -->
+        <div id="shortcutOverlay" class="overlay" style="display: none;">
+            <div class="overlay-content">
+                <div>
+                    <h2>Keyboard Shortcuts</h2>
+                </div>
+                <div class="shortcutList">
+                    <div style="display: flex; flex-direction: column; align-items: flex-end; margin-right: 10px;">
+                        <div class="shortcut"><span class="key">↑: </span></div>
+                        <div class="shortcut"><span class="key">↓: </span></div>
+                        <div class="shortcut"><span class="key">←: </span></div>
+                        <div class="shortcut"><span class="key">→: </span></div>
+                        <div class="shortcut"><span class="key">Shift+→: </span></div>
+                        <div class="shortcut"><span class="key">a: </span></div>
+                        <div class="shortcut"><span class="key">s: </span></div>
+                        <div class="shortcut"><span class="key">x: </span></div>
+                        <div class="shortcut"><span class="key">f: </span></div>
+                        <div class="shortcut"><span class="key">?: </span></div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: flex-start; margin-right: 10px;">
+                        <div class="shortcut">Shift tile up into empty space</div>
+                        <div class="shortcut">Shift tile down into empty space</div>
+                        <div class="shortcut">Shift tile left into empty space</div>
+                        <div class="shortcut">Shift tile right into empty space</div>
+                        <div class="shortcut">Move multiple tiles into empty space</div>
+                        <div class="shortcut">New game</div>
+                        <div class="shortcut">Solve step</div>
+                        <div class="shortcut">Pause/unpause game</div>
+                        <div class="shortcut">Open solver to find optimal solution</div>
+                        <div class="shortcut">Open keyboard shortcut help</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="close">
+                        <button class="overlayButton" data-overlay="shortcutOverlay">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pause Overlay -->
+        <div id="pauseOverlay" class="overlay" style="display: none;">
+            <div class="overlay-content">
+                <h2>Game Paused</h2>
+            </div>
+        </div>
+
+        <!-- Instructions Overlay -->
+        <div id="instructionsOverlay" class="overlay" style="display: none;">
+            <div class="overlay-content">
+                <h2>Welcome!</h2>
+                <p>Arrange the tiles from 1 - 15.</p>
+                <p>Click to move tiles or use arrow keys.</p>
+                <p>Hit <span class="key">?</span> for keyboard shortcuts</p>
+                <button class="overlayButton" data-overlay="instructionsOverlay">Start Game</button>
+            </div>
+        </div>
+
+    </div>
+</main>
