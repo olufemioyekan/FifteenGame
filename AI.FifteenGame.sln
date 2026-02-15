@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AI.FifteenGame.Console", "A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AI.FifteenGame.WebApi", "AI.FifteenGame.WebApi\AI.FifteenGame.WebApi.csproj", "{79582C48-5DEF-43DB-AA16-0B46DE0211E3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AI.FifteenGame.Web", "AI.FifteenGame.Web\AI.FifteenGame.Web.csproj", "{CB2A5341-54BC-4D12-BDD2-39A561E76678}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
