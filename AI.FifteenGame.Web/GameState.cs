@@ -1,14 +1,11 @@
-﻿using Microsoft.Analytics.Interfaces;
-using Microsoft.Analytics.Types.Sql;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿
 
 namespace AI.FifteenGame.Web
 {
-    internal class GameState
+    public class GameState
     {
+        public string Password { get; set; }
+        public string UserName { get; set; }
+        public int Wins { get; set; }   
     }
 }
