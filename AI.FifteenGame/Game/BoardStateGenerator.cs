@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AI.FifteenGame.Agent;
 using AI.FifteenGame.Extensions;
 
 namespace AI.FifteenGame
@@ -18,26 +19,26 @@ namespace AI.FifteenGame
        /// <returns></returns>
         public static BoardState CreateRandomBoard()
         {
-            var iterations = 25;
+            var iterations = 150;
             var solutionPosition = CreateSolutionBoard();
-            Node currentNode = new Node(solutionPosition, null, 0);
+            var random = new Random();
+            var current = solutionPosition;
+            var prevEmpty = current.EmptySquare;
+
             while (iterations > 0)
             {
-                var random = new Random();
-                var legalMoves = currentNode.BoardState.LegalMoves.ToList();
-                var moveIndex = random.Next(0, legalMoves.Count);
-                var move = legalMoves[moveIndex];
-                var newBoard = currentNode.BoardState.Move(move);
-                var newNode= new Node(newBoard, move, 0);
-                newNode.Parent = currentNode;
-                if (newNode.Parent.Move != null && newNode.Move.Direction.IsOpposite(newNode.Parent.Move.Direction))
-                    continue;
-                
-                currentNode = newNode;
-                --iterations;
-            }
+                var moves = current.LegalMoves.ToList();
+                var move = moves[random.Next(moves.Count)];
+                var next = current.Move(move);
 
-            return currentNode.BoardState;
+                if (next.EmptySquare.Equals(prevEmpty))
+                    continue;
+
+                prevEmpty = current.EmptySquare; 
+                current = next;
+                iterations--;
+            }
+            return current;
 
         }
         /// <summary>
@@ -50,14 +51,12 @@ namespace AI.FifteenGame
             var columns = Enumerable.Range(1, 4);
             var map = new Dictionary<BoardSquare, int?>();
 
-            foreach (var column in columns)
-            {
-                foreach (var row in rows)
+            for (int y = 1; y <= 4; y++)
+                for (int x = 1; x <= 4; x++)
                 {
-                    var gs = new BoardSquare { X = row, Y = column };
-                    map.Add(gs, gs.SolutionPiece);
+                    var sq = new BoardSquare { X = x, Y = y };
+                    map.Add(sq, sq.SolutionPiece);
                 }
-            }
 
             return new BoardState(map);
         }
