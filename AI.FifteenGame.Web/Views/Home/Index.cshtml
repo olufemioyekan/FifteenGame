@@ -106,4 +106,29 @@
         </div>
 
     </div>
+
+    <!-- Control Panel -->
+    <div class="control-panel" id="controlPanel">
+        <h3>Control Panel</h3>
+        <div class="control-group">
+            <label for="tileColorPicker">Tile Color</label>
+            <input type="color" id="tileColorPicker" value="#ECE0CA" />
+        </div>
+        <div class="control-group">
+            <label for="boardColorPicker">Board Color</label>
+            <input type="color" id="boardColorPicker" value="#B9AEA1" />
+        </div>
+        <div class="control-group">
+            <label for="difficultySlider">Difficulty</label>
+            <div class="slider-wrapper">
+                <input type="range" id="difficultySlider" min="1" max="5" value="3" />
+                <span id="difficultyLabel">3</span>
+            </div>
+        </div>
+        <div class="control-buttons">
+            <button type="button" id="shuffleBtn">Shuffle</button>
+            <button type="button" id="resetGameBtn">Reset Game</button>
+            <button type="button" id="solveGameBtn">Solve Game</button>
+        </div>
+    </div>
 </main>
