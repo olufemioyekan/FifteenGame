@@ -6,6 +6,9 @@
     var defaultEmptyColor = "#C9BCAD";
     var solvedOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, ""];
 
+    var imageMode = false;
+    var currentImageUrl = null;
+
     // Tile color picker
     $("#tileColorPicker").on("input", function () {
         var color = $(this).val();
@@ -53,10 +56,16 @@
         var $b = children.eq(idxB);
         var tempHtml = $a.html();
         var tempClass = $a.attr("class");
+        var tempStyle = $a.attr("style") || "";
+        var tempDataTile = $a.attr("data-tile");
         $a.html($b.html());
         $a.attr("class", $b.attr("class"));
+        $a.attr("style", $b.attr("style") || "");
+        $a.attr("data-tile", $b.attr("data-tile"));
         $b.html(tempHtml);
         $b.attr("class", tempClass);
+        $b.attr("style", tempStyle);
+        $b.attr("data-tile", tempDataTile);
     }
 
     // Shuffle: perform valid random moves based on difficulty level
@@ -84,9 +93,13 @@
             swapTiles($tiles, emptyIdx, pick);
         }
 
-        // Apply current color selections
-        var tileColor = $("#tileColorPicker").val();
-        $(".tile").not(".empty").css("background-color", tileColor);
+        // Apply current color selections or image
+        if (imageMode && currentImageUrl) {
+            applyImageToTiles(currentImageUrl);
+        } else {
+            var tileColor = $("#tileColorPicker").val();
+            $(".tile").not(".empty").css("background-color", tileColor);
+        }
 
         // Hide overlays
         $(".overlay").hide();
@@ -198,6 +211,75 @@
             }, delay);
             delay += 80;
         });
+    });
+
+    // Helper: apply image background to each tile based on its data-tile value
+    function applyImageToTiles(imageUrl) {
+        $("#tiles .tile").each(function () {
+            var tileNum = parseInt($(this).attr("data-tile"), 10);
+            if ($(this).hasClass("empty") || tileNum === 16) {
+                $(this).css({
+                    "background-image": "",
+                    "background-size": "",
+                    "background-position": ""
+                });
+            } else {
+                var row = Math.floor((tileNum - 1) / 4);
+                var col = (tileNum - 1) % 4;
+                var xPos = (col / 3 * 100) + "%";
+                var yPos = (row / 3 * 100) + "%";
+                $(this).css({
+                    "background-image": "url('" + imageUrl + "')",
+                    "background-size": "400% 400%",
+                    "background-position": xPos + " " + yPos
+                });
+            }
+        });
+    }
+
+    // Image Mode toggle
+    $("#imageModeToggle").on("change", function () {
+        imageMode = $(this).is(":checked");
+        if (imageMode) {
+            $("#imageSelectGroup").show();
+            $("#tileColorPicker").prop("disabled", true);
+            $("#tiles").addClass("image-mode");
+            if (currentImageUrl) {
+                applyImageToTiles(currentImageUrl);
+            }
+        } else {
+            $("#imageSelectGroup").hide();
+            $("#tileColorPicker").prop("disabled", false);
+            $("#tiles").removeClass("image-mode");
+            // Remove image backgrounds
+            $(".tile").css({
+                "background-image": "",
+                "background-size": "",
+                "background-position": ""
+            });
+            // Re-apply tile color
+            var tileColor = $("#tileColorPicker").val();
+            $(".tile").not(".empty").css("background-color", tileColor);
+        }
+    });
+
+    // Image file selection
+    $("#imageSelectBtn").on("click", function () {
+        $("#imageFileInput").click();
+    });
+
+    $("#imageFileInput").on("change", function (e) {
+        var file = e.target.files[0];
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function (evt) {
+                currentImageUrl = evt.target.result;
+                if (imageMode) {
+                    applyImageToTiles(currentImageUrl);
+                }
+            };
+            reader.readAsDataURL(file);
+        }
     });
 
 })(jQuery);

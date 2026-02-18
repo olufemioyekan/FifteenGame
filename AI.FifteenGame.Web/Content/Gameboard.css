@@ -558,3 +558,67 @@ button:disabled {
         padding: 0.6em 1.2em;
         margin: 0;
     }
+
+/* Toggle Switch */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 26px;
+    margin: 0;
+}
+
+    .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #B9AEA1;
+    border-radius: 26px;
+    transition: background-color 0.3s ease;
+}
+
+    .toggle-slider::before {
+        content: "";
+        position: absolute;
+        height: 20px;
+        width: 20px;
+        left: 3px;
+        bottom: 3px;
+        background-color: #fff;
+        border-radius: 50%;
+        transition: transform 0.3s ease;
+    }
+
+.toggle-switch input:checked + .toggle-slider {
+    background-color: var(--button-bg);
+}
+
+.toggle-switch input:checked + .toggle-slider::before {
+    transform: translateX(22px);
+}
+
+/* Image Select Button */
+.image-select-btn {
+    font-size: 0.85em !important;
+    padding: 0.4em 1em !important;
+    margin: 0 !important;
+}
+
+/* Image Mode Tile Styles */
+.image-mode .tile:not(.empty) span {
+    display: none;
+}
+
+.image-mode .tile:not(.empty) {
+    background-size: 400% 400%;
+    border-radius: 4px;
+}
