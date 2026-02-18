@@ -7,22 +7,22 @@
 
     <div class="board" id="board" style="background-color: rgb(185, 174, 161);">
         <div id="tiles">
-            <div class="tile"><span>1</span></div>
-            <div class="tile"><span>2</span></div>
-            <div class="tile"><span>3</span></div>
-            <div class="tile"><span>4</span></div>
-            <div class="tile"><span>5</span></div>
-            <div class="tile"><span>6</span></div>
-            <div class="tile"><span>7</span></div>
-            <div class="tile"><span>8</span></div>
-            <div class="tile"><span>9</span></div>
-            <div class="tile"><span>10</span></div>
-            <div class="tile"><span>11</span></div>
-            <div class="tile"><span>12</span></div>
-            <div class="tile"><span>13</span></div>
-            <div class="tile"><span>14</span></div>
-            <div class="tile"><span>15</span></div>
-            <div class="tile empty"></div>
+            <div class="tile" data-tile="1"><span>1</span></div>
+            <div class="tile" data-tile="2"><span>2</span></div>
+            <div class="tile" data-tile="3"><span>3</span></div>
+            <div class="tile" data-tile="4"><span>4</span></div>
+            <div class="tile" data-tile="5"><span>5</span></div>
+            <div class="tile" data-tile="6"><span>6</span></div>
+            <div class="tile" data-tile="7"><span>7</span></div>
+            <div class="tile" data-tile="8"><span>8</span></div>
+            <div class="tile" data-tile="9"><span>9</span></div>
+            <div class="tile" data-tile="10"><span>10</span></div>
+            <div class="tile" data-tile="11"><span>11</span></div>
+            <div class="tile" data-tile="12"><span>12</span></div>
+            <div class="tile" data-tile="13"><span>13</span></div>
+            <div class="tile" data-tile="14"><span>14</span></div>
+            <div class="tile" data-tile="15"><span>15</span></div>
+            <div class="tile empty" data-tile="16"></div>
         </div>
 
         <!-- Game Over Overlay -->
@@ -105,5 +105,42 @@
             </div>
         </div>
 
+    </div>
+
+    <!-- Control Panel -->
+    <div class="control-panel" id="controlPanel">
+        <h3>Control Panel</h3>
+        <div class="control-group">
+            <label for="tileColorPicker">Tile Color</label>
+            <input type="color" id="tileColorPicker" value="#ECE0CA" />
+        </div>
+        <div class="control-group">
+            <label for="boardColorPicker">Board Color</label>
+            <input type="color" id="boardColorPicker" value="#B9AEA1" />
+        </div>
+        <div class="control-group">
+            <label for="imageModeToggle">Image Mode</label>
+            <label class="toggle-switch">
+                <input type="checkbox" id="imageModeToggle" />
+                <span class="toggle-slider"></span>
+            </label>
+        </div>
+        <div class="control-group" id="imageSelectGroup" style="display: none;">
+            <label>Image</label>
+            <button type="button" id="imageSelectBtn" class="image-select-btn">Choose Image</button>
+            <input type="file" id="imageFileInput" accept="image/*" style="display: none;" />
+        </div>
+        <div class="control-group">
+            <label for="difficultySlider">Difficulty</label>
+            <div class="slider-wrapper">
+                <input type="range" id="difficultySlider" min="1" max="5" value="3" />
+                <span id="difficultyLabel">3</span>
+            </div>
+        </div>
+        <div class="control-buttons">
+            <button type="button" id="shuffleBtn">Shuffle</button>
+            <!--<button type="button" id="resetGameBtn">Reset Game</button>-->
+            <button type="button" id="solveGameBtn">Show Solution</button>
+        </div>
     </div>
 </main>
