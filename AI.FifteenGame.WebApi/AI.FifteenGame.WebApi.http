@@ -1,0 +1,23 @@
+@AI.FifteenGame.WebApi_HostAddress = https://localhost:7039
+
+GET {{AI.FifteenGame.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+POST {{AI.FifteenGame.WebApi_HostAddress}}/solve
+Content-Type: application/json
+
+{
+  //BoardState
+}
+
+###
+
+GET {{AI.FifteenGame.WebApi_HostAddress}}/new
+
+###
+
+GET {{AI.FifteenGame.WebApi_HostAddress}}/
+
+###

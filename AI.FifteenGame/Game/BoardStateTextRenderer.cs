@@ -53,8 +53,10 @@ namespace AI.FifteenGame
         {
             return string.Format("|  {0} ",
                 piece.HasValue && piece.Value > 9 ? piece.Value.ToString() : 
-                !piece.HasValue ? "  " :
-                piece.Value + " ");
+                piece.HasValue 
+                ? piece.Value + " " 
+                : "  "
+                );
         }
     }
 }
