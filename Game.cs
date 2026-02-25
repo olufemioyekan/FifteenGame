@@ -4,7 +4,9 @@ using System.Collections.Specialized;
 public class Game
 {
     #region Properties
-    public IDictionary<int, int?> BoardState { get; private set; }
+    
+		
+	public IDictionary<int, int?> BoardState { get; private set; }
     
     #endregion
     public Game()
