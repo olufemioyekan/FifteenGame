@@ -10,6 +10,7 @@ namespace AI.FifteenGame.Web
 {
     public class MvcApplication : System.Web.HttpApplication
     {
+        // add error handling, and authentication if needed
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
