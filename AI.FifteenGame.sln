@@ -9,8 +9,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AI.FifteenGame.Console", "AI.FifteenGame.Console\AI.FifteenGame.Console.csproj", "{FD7EB2B4-B1DE-474B-8A92-6AB8A4E0DD79}"
 EndProject
+
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AI.FifteenGame.WebApi", "AI.FifteenGame.WebApi\AI.FifteenGame.WebApi.csproj", "{79582C48-5DEF-43DB-AA16-0B46DE0211E3}"
 EndProject
+
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AI.FifteenGame.Web", "AI.FifteenGame.Web\AI.FifteenGame.Web.csproj", "{CB2A5341-54BC-4D12-BDD2-39A561E76678}"
 EndProject
 Global
